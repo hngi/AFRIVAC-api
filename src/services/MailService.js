@@ -1,30 +1,55 @@
-const nodemailer = require('nodemailer')
-const config = require('../../config')[process.env.NODE_ENV]
-const templatingService = new (require('./TemplatingService'))();
+const nodemailer = require('nodemailer');
+const pug = require('pug');
+const htmlToText = require('html-to-text');
+const config = require('./../config/mail')
 
-class MailService {
-     constructor() {
-          this.transporter = nodemailer.createTransport(config.mail);
+module.exports = class Email {
+     constructor(user, token) {
+          this.to = user.email;
+          this.token = token;
+          this.from = `Afrivac <${process.env.EMAIL_FROM}>`;
      }
 
-     getTemplate(context, template = "emails/default.jade") {
-          return templatingService.render(template, context);
-     };
+     newTransport() {
+          return nodemailer.createTransport(config);
+     }
 
-     async sendMail(from, to, subject, context, template) {
-          from = from || '"no-reply XXX" <no-reply@xxx.xxx>'
-          context = context || {}
-
-          if (!to) throw new Error("Recipient is required");
-          if (!subject) throw new Error("Subject is required");
-
-          return await this.transporter.sendMail({
-               from,
-               to: Array.isArray(to) ? to.join() : to,
-               subject: subject,
-               html: this.getTemplate(context, template)
+     // Send the actual email
+     async send(template, subject) {
+          // 1) Render HTML based on a pug template
+          const html = pug.renderFile(`${__dirname}/../views/email/${template}.pug`, {
+               token: this.token,
+               subject
           });
-     }
-}
 
-module.exports = MailService
+          // 2) Define email options
+          const mailOptions = {
+               from: this.from,
+               to: this.to,
+               subject,
+               html,
+               text: htmlToText.fromString(html)
+          };
+
+          // 3) Create a transport and send email
+          await this.newTransport().sendMail(mailOptions);
+     }
+
+     async sendWelcome() {
+          await this.send('welcome', 'Welcome to the AfricVac!');
+     }
+
+     async sendActivate() {
+          await this.send(
+               'activateAccount', 
+               'Your account activation token (valid for only 10 minutes)'
+          );
+     }
+
+     async sendPasswordReset() {
+          await this.send(
+               'passwordReset',
+               'Your password reset token (valid for only 10 minutes)'
+          );
+     }
+};
