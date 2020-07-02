@@ -6,6 +6,9 @@ const { Roles } = require("./../config/constants")
 
 const UserSchema = new Schema(
   {
+    name: {
+      type: String
+    },
     email: {
       type: String,
       trim: true,
@@ -14,20 +17,44 @@ const UserSchema = new Schema(
     password: {
       type: String,
       required: [true, "password is required"],
+      select: false
     },
     role: {
       type: String,
       trim: true,
       enum: [Roles.USER],
-      default: Roles.USER
+      default: Roles.USER,
+      select: false
     },
     isActive: {
       type: Boolean,
-      default: true,
+      default: false,
+    },
+    country: {
+      type: String,
+    },
+    number: {
+      type: Number
+    },
+    username: {
+      type: String,
+      required: true
+    },
+    profileImageUrl: {
+      type: String,
+      default: "https://afrivac.s3.us-east-2.amazonaws.com/default.jpg"
+    },
+    passwordResetToken:{
+      type: String,
+      select: false
+    },
+    passwordResetExpires:{
+      type: Date,
+      select: false
     }
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 
