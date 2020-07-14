@@ -7,10 +7,14 @@
  */
 
 const http = require('http');
+const dotenv = require('dotenv');
+// load env configuration as early as possible
+dotenv.config();
 const config = require('./src/config');
 const app = require('./app')(config);
 // eslint-disable-next-line import/order
 const debug = require('debug')(`${config.applicationName}:server`);
+
 
 /**
  * Get port from environment and store in Express.

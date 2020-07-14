@@ -5,7 +5,9 @@
  * @since 0.1.0
  * Last Modified: Gabriel <Gabriel@gmail.com> <13/07/2020 06:17pm>
  */
-
+const dotenv = require('dotenv');
+// load env configuration as early as possible
+dotenv.config();
 const { google } = require('googleapis');
 const _ = require('lodash');
 const UserRepo = require('../../data/repository/UserRepo');
@@ -16,7 +18,8 @@ const oAuth2Client = new google.auth.OAuth2(
   process.env.GOOGLE_CLIENT_SECRET,
   process.env.GOOGLE_CALLBACK_URL
 );
-
+console.log(process.env.GOOGLE_CALLBACK_URL);
+console.log(process.env.GOOGLE_CLIENT_SECRET);
 /**
  * @class GoogleService
  * @classdesc handles the google oAuth flow, generate redirection url and processes user data

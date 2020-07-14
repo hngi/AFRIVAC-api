@@ -59,7 +59,6 @@ class LocalService {
     // create the new user in the database
     let newUser = await UserRepo.create(data);
      //generating jwt for user
-     console.log("On my way")
      const token = signToken(newUser._id);
     // pick only required fields
     newUser = _.pick(newUser, [
@@ -68,7 +67,7 @@ class LocalService {
       'email',
       'createdAt',
     ]);
-    console.log("Done")
+  
     // return the user object
     return {token, newUser};
   }
