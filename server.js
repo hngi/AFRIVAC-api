@@ -15,10 +15,6 @@ preMiddlewares(app);
 
 app.use('/api', apiRoutes())
 
-app.use('/', (req, res) => {
-  res.status(200).sendFile(express.static("public/index.html"));
-})
-
 errorMiddlewares(app)
 
 app.listen(port, () => {
