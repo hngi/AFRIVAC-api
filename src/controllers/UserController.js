@@ -8,8 +8,18 @@ class UserContoller {
   }
 
   async authenticate(req, res) {
-    const data = await authenticate(req.body);
+    const data = await UserService.authenticate(req.body);
     res.status(200).send(response("User signed in", data));
+  }
+
+  async confirmToken(req, res) {
+    const data = await UserService.confirmToken(req.body);
+    res.status(200).send(response("Confirmation Successful", data));
+  }
+
+  async resendToken(req, res) {
+    const data = await this.resend(req.body); 
+    res.status(200).send(response("Token sent Successfully", data));
   }
 
   async getMany(req, res) {
@@ -30,6 +40,11 @@ class UserContoller {
   async delete(req, res) {
     const data = await UserService.deleteOne(req.params.userId);
     res.status(200).send(response("User deleted", data));
+  }
+
+  async uploadProfilePicture(req, res) {
+    const data = await UserService.uploadProfilePicture(req.params.userId, req.file);
+    res.status(200).send(response("User Profile Phtot Updated Successfully", data));
   }
 }
 
