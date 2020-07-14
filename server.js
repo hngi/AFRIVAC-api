@@ -1,6 +1,9 @@
 require('express-async-errors')
 const express = require('express');
+const dotenv = require('dotenv');
 const app = express();
+
+dotenv.config({ path: './.env' });
 
 const preMiddlewares = require('./src/middlewares/preMiddlewares');
 const errorMiddlewares = require('./src/middlewares/errorMiddlewares');
