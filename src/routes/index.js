@@ -8,7 +8,9 @@
 
 const express = require('express');
 const authRoute = require('./auth');
+const userRoute = require('./user');
 const Validator = require('../utilities/validator/schemaValidation');
+const protect = require('../utilities/protect');
 
 const router = express.Router();
 
@@ -20,6 +22,8 @@ module.exports = (config) => {
    */
   router.use(Validator());
   router.use('/auth', authRoute(config));
+  router.use(protect());
+  router.use('/user', userRoute(config));
 
   return router;
 };

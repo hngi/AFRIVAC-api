@@ -9,7 +9,6 @@ const express = require('express');
 
 const router = express.Router();
 const LocalService = require('../../services/authService/LocalService');
-const GoogleService = require('../../services/authService/GoogleService');
 
 const {
     SuccessResponse,

@@ -9,7 +9,7 @@
 const _ = require('lodash');
 const UserRepo = require('../../data/repository/UserRepo');
 const   ReviewRepo = require('../../data/repository/ReviewRepo');
-const { signToken } = require('./../../utilities/jwt');
+const signToken = require('./../../utilities/jwt');
 const {
   AuthFailureError,
   BadRequestError,
@@ -66,10 +66,64 @@ class LocalService {
       'name',
       'email',
       'createdAt',
+      'photo'
     ]);
   
     // return the user object
     return {token, newUser};
+  }
+
+  /**
+   * @description A static method to get user details
+   * @param data An object that contains users ID.
+   * @return {Promise<UserModel>}
+   */
+  static async getUser(data) {
+    // checks if user with specified ID exist
+    let user = await UserRepo.findUserById(data);
+    console.log(user);
+    // if we don't found user with that ID, throw BadRequestError
+    if (!user) throw new BadRequestError("User with ID doesn't exist");
+  
+     //generating jwt for user
+     const token = signToken(user._id);
+    // pick only required fields
+     user = _.pick(user, [
+      '_id',
+      'name',
+      'email',
+      'createdAt',
+      'photo'
+    ]);
+  
+    // return the user object
+    return {token, user};
+  }
+
+  /**
+   * @description A static method to update user details
+   * @param data An object that contains users ID.
+   * @return {Promise<UserModel>}
+   */
+  static async updateUser(id, data) {
+    // checks if user with specified ID exist
+    let user = await UserRepo.updateOneById(id ,data);
+    // if we don't found user with that ID, throw BadRequestError
+    if (!user) throw new BadRequestError("User with ID doesn't exist");
+  
+     //generating jwt for user
+     const token = signToken(user._id);
+    // pick only required fields
+     user = _.pick(user, [
+      '_id',
+      'name',
+      'email',
+      'createdAt',
+      'photo'
+    ]);
+  
+    // return the user object
+    return {token, user};
   }
 
   /**
@@ -85,7 +139,6 @@ static async craeteReview(data) {
     // create the new user in the database
     let newUser = await UserRepo.create(data);
      //generating jwt for user
-     console.log("On my way")
      const token = signToken(newUser._id);
     // pick only required fields
     newUser = _.pick(newUser, [
@@ -94,7 +147,6 @@ static async craeteReview(data) {
       'email',
       'createdAt',
     ]);
-    console.log("Done")
     // return the user object
     return {token, newUser};
   }

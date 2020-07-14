@@ -35,6 +35,7 @@ class UserRepo {
    * @returns {Object}
    */
   static findUserById(userId) {
+
     return UserModel.findById({ _id: userId });
   }
 
