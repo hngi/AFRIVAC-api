@@ -15,7 +15,7 @@ const APP_NAME = 'afivac';
 dotenv.config();
 
 const {
-  PORT = 5000,
+  PORT = 3000,
   MONGODB_PROD_URI,
   MONGODB_LOCAL_URI,
   NODE_ENV = 'development',
@@ -27,7 +27,7 @@ module.exports = {
   port: PORT,
   logger: bunyan.createLogger({ name: APP_NAME }),
   mongodb: {
-    dsn: NODE_ENV === 'development' ? MONGODB_PROD_URI : MONGODB_LOCAL_URI,
+    dsn: NODE_ENV === 'production' ? MONGODB_PROD_URI : MONGODB_LOCAL_URI,
     options: {
       useNewUrlParser: true,
       useUnifiedTopology: true,
