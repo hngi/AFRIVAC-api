@@ -1,27 +1,88 @@
-require('express-async-errors')
-const express = require('express');
-const dotenv = require('dotenv');
-const app = express();
+/**
+ * @file Manages the run configuration for the whole application, defines the port used,
+ * creates the http server and defines some listeners for the server.
+ * @author Gabriel <bennkeys1@gmail.com> <20/06/2020 06:37am>
+ * @since 0.1.0
+ * Last Modified: Gabriel <Gabriel@gmail.com> <13/07/2020 06:17pm>
+ */
 
-dotenv.config({ path: './.env' });
+const http = require('http');
+const config = require('./src/config');
+const app = require('./app')(config);
+// eslint-disable-next-line import/order
+const debug = require('debug')(`${config.applicationName}:server`);
 
-const preMiddlewares = require('./src/middlewares/preMiddlewares');
-const errorMiddlewares = require('./src/middlewares/errorMiddlewares');
-const apiRoutes = require('./src/routes');
-const databaseConfig = require('./src/config/db');
-const port = process.env.PORT;
+/**
+ * Get port from environment and store in Express.
+ */
+const port = normalizePort(process.env.PORT || config.port);
+app.set('port', port);
 
-preMiddlewares(app);
+/**
+ * Create HTTP server.
+ */
+const server = http.createServer(app);
 
-app.use('/api', apiRoutes())
+/**
+ * Listen on provided port, on all network interfaces.
+ */
 
-errorMiddlewares(app)
+server.listen(port);
+server.on('error', onError);
+server.on('listening', onListening);
 
-app.listen(port, () => {
-  console.log(`::: server listening on port ${port}. Open via http://localhost:${port}/`);
-  databaseConfig();
-});
+/**
+ * Normalize a port into a number, string, or false.
+ */
 
-app.on('error', (error) => {
-  console.log(`::> an error occiurred in our server: \n ${error}`);
-});
+function normalizePort(val) {
+  const parsedPort = parseInt(val, 10);
+
+  if (isNaN(parsedPort)) {
+    // named pipe
+    return val;
+  }
+
+  if (parsedPort >= 0) {
+    // port number
+    return parsedPort;
+  }
+
+  return false;
+}
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+
+function onError(error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  const bind = typeof port === 'string' ? `Pipe ${port}` : `Port ${port}`;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      config.logger.error(`${bind} requires elevated privileges`);
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      config.logger.error(`${bind} is already in use`);
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+
+function onListening() {
+  const addr = server.address();
+  const bind = typeof addr === 'string' ? `pipe ${addr}` : `port ${addr.port}`;
+  debug(`Listening on ${bind}`);
+}
