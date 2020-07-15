@@ -27,12 +27,12 @@ module.exports = (config) => {
      * This route handles the GET verb for retrieving all user details
      */
     router.get(
-        '/',
+        'users/',
         asyncHandler(async (req, res) => {
             const user = await LocalService.getUsers()
             return new SuccessResponse('User data retrieved successful', user).send(res);
         })
     );
-    
+
     return router;
 };
