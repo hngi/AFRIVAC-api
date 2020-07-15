@@ -105,23 +105,27 @@ class LocalService {
    * @return {Promise<UserModel>}
    */
   static async getUsers() {
+    let selectedProperties = [];
     // checks if user with specified ID exist
-    let user = await UserRepo.getAllUsers();
+    let users = await UserRepo.getAllUsers();
     // if we don't found user with that ID, throw BadRequestError
-    if (!user) throw new BadRequestError("No registered user");
-  
+    if (!users) throw new BadRequestError("No registered user");
+    console.log(users);
     // pick only required fields
-     user = _.pick(user, [
-      '_id',
-      'name',
-      'email',
-      'createdAt',
-      'photo',
-      'number'
-    ]);
-  
+    users.forEach(user => {
+      user = _.pick(user, [
+        '_id',
+        'name',
+        'email',
+        'createdAt',
+        'photo',
+        'number'
+      ]);
+      selectedProperties.push(user);
+    })
+     
     // return the user object
-    return user;
+    return selectedProperties;
   }
 
   /**
