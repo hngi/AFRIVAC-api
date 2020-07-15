@@ -54,6 +54,14 @@ class UserRepo {
   static updateOneById(profileId, data) {
     return UserModel.findOneAndUpdate({ _id: profileId }, data, { new: true });
   }
+
+  /**
+   * @description A static method to returns all users.
+   * @returns {Object}
+   */
+  static getAllUsers() {
+    return UserModel.find();
+  }
 }
 
 // exports class as a module

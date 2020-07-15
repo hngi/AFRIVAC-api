@@ -81,7 +81,6 @@ class LocalService {
   static async getUser(data) {
     // checks if user with specified ID exist
     let user = await UserRepo.findUserById(data);
-    console.log(user);
     // if we don't found user with that ID, throw BadRequestError
     if (!user) throw new BadRequestError("User with ID doesn't exist");
   
@@ -98,6 +97,31 @@ class LocalService {
   
     // return the user object
     return {token, user};
+  }
+
+  /**
+   * @description A static method to get all user details
+   * @param data An object that contains users ID.
+   * @return {Promise<UserModel>}
+   */
+  static async getUsers() {
+    // checks if user with specified ID exist
+    let user = await UserRepo.getAllUsers();
+    // if we don't found user with that ID, throw BadRequestError
+    if (!user) throw new BadRequestError("No registered user");
+  
+    // pick only required fields
+     user = _.pick(user, [
+      '_id',
+      'name',
+      'email',
+      'createdAt',
+      'photo',
+      'number'
+    ]);
+  
+    // return the user object
+    return user;
   }
 
   /**

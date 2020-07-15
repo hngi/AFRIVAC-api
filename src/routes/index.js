@@ -9,6 +9,7 @@
 const express = require('express');
 const authRoute = require('./auth');
 const userRoute = require('./user');
+const adminRoute = require('./admin');
 const Validator = require('../utilities/validator/schemaValidation');
 const protect = require('../utilities/protect');
 
@@ -21,6 +22,7 @@ module.exports = (config) => {
    *  placed on any route
    */
   router.use(Validator());
+  router.use('/admin', adminRoute(config));
   router.use('/auth', authRoute(config));
   router.use(protect());
   router.use('/user', userRoute(config));
