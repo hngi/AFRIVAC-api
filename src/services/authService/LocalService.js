@@ -41,7 +41,7 @@ class LocalService {
     if (!correctPassword) throw new AuthFailureError('Invalid Credentials');
 
     // extract only required fields
-    user = _.pick(user, ['_id', 'firstName', 'lastName', 'email', 'createdAt']);
+    user = _.pick(user, ['_id', 'firstName', 'lastName', 'email', 'photo', 'createdAt']);
     // return the found user object
     return{token, user}
   }
