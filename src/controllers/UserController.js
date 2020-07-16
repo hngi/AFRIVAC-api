@@ -1,5 +1,12 @@
+/**
+ * @file Manages all database queries related to the Popular Destinations document(table)
+ * @author Gabriel <gabrielsonchia@gmail.com@gmail.com> <20/06/2020 06:37am>
+ * @since 0.1.0
+ * Last Modified: Gabriel <gabrielsonchia@gmail.com@gmail.com> <13/07/2020 06:17pm>
+ */
+
 const UserService = require("./../services/UserService");
-const response = require("./../utils/response");
+const response = require("./../utils/response"); 
 
 class UserContoller {
   async add(req, res) {

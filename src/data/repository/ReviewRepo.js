@@ -18,17 +18,16 @@ class ReviewRepo {
    * @returns {Promise<UserModel>}
    */
   static async create(reviewData) {
-    const review = await ReviewModel.create(userData);
+    const review = await ReviewModel.create(reviewData);
     return review.toObject();
   }
 
   /**
    * @description A static method to find review by Id.
-   * * @param reviewId - The review Id
    * @returns {Object}
    */
-  static findUserById(reviewId) {
-    return ReviewModel.findById({ _id: userId });
+  static getAllReviews() {
+    return ReviewModel.find();
   }
 }
 

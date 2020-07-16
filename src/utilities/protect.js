@@ -4,6 +4,7 @@ const UserRepo = require('./../data/repository/UserRepo');
 const {
     promisify
 } = require('util');
+const { BadRequestError } = require('./core/ApiError')
 
 module.exports = () => {
 return asyncHandler(async (req, res, next) => {
