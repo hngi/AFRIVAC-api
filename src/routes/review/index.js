@@ -28,7 +28,7 @@ module.exports = (config) => {
     .post(asyncHandler(async (req, res) => {
             const data = req.body;
             await ReviewService.createReview(data, req.user._id);
-            const destination = await PopularDestinationService.getAllPopularDestinationsById(data.destination)
+            const destination = await PopularDestinationService.getAllPopularDestinationById(data.destination)
             return new SuccessResponse('Review was Successful Created', destination).send(res);
         })
     )
