@@ -24,7 +24,7 @@ module.exports = (config) => {
     router.get(
         '/',
         asyncHandler(async (req, res) => {
-            const popularDestination = await PopularDestinationService.getAllPopularDestinationById(req.params.id, req.user.id)
+            const popularDestination =  await PopularDestinationService.getAllPopularDestinations(req.user.id)
             return new SuccessResponse('Popular Destination data retrieved successful', popularDestination).send(res);
         })
     );
@@ -32,7 +32,7 @@ module.exports = (config) => {
     router.get(
         '/:id',
         asyncHandler(async (req, res) => {
-            const popularDestination = await PopularDestinationService.getAllPopularDestinations(req.user.id)
+            const popularDestination = await PopularDestinationService.getAllPopularDestinationById(req.params.id, req.user.id);
             return new SuccessResponse('Popular Destination data retrieved successful', popularDestination).send(res);
         })
     );
