@@ -20,14 +20,16 @@ const {
 class DestinationService {
   /**
    * @description A static method to create popular destinations
-   * @param data An object that contains 
+   * @param data An object that contains request object
    * @return {Promise<UserModel>}
    */
 static async createPopularDestination(data) {
+    const details = data.body;
+    const user_id = req.user.id
     // create the new  popular destination in the database
-    let newDestination = await PopularDestinationRepo.create(data);
+    let newDestination = await PopularDestinationRepo.create(details);
      //generating jwt for user
-     const token = signToken(newUser._id);
+     const token = signToken(user_id);
     // pick only required fields
     newDestination = _.pick(newDestination, [
       '_id',
@@ -46,14 +48,15 @@ static async createPopularDestination(data) {
 
   /**
    * @description A static method to get all popular destinations
+   * @param userId Id of the logged in user
    * @return {Promise<UserModel>}
    */
-  static async getAllPopularDestinations() {
+  static async getAllPopularDestinations(userId) {
     let selectedProperties = [];
     // Retrieving all popular destination
     let popularDestinations = await PopularDestinationRepo.getAllPopularDestinations()
     //generating jwt for user
-    const token = signToken(newUser._id);
+    const token = signToken(userId);
     // pick only required fields
     popularDestinations.forEach(destination => {
       destination = _.pick(destination, [
@@ -74,16 +77,17 @@ static async createPopularDestination(data) {
 
   /**
    * @description A static method to get popular destination by ID
-   * @param data The destination's ID
+   * @param data The destination's ID 
+   * @param id Logged in user Id
    * @return {Promise<UserModel>}
    */
-  static async getAllPopularDestinationsById(data) {
+  static async getAllPopularDestinationById(data,id) {
     // Retrieving all popular destination
     let destination = await PopularDestinationRepo.getPopularDestination(data,{ path: 'reviews' });
      // if we don't found destination with that ID, throw BadRequestError
      if (!destination) throw new BadRequestError("Destination with ID doesn't exist");
      //generating jwt for user
-     const token = signToken(newUser._id);
+     const token = signToken(id);
     // pick only required fields
       destination = _.pick(destination, [
         '_id',

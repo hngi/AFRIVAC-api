@@ -7,7 +7,7 @@
 const express = require('express');
 
 const router = express.Router();
-const PopularDestinationService = require('../../services/PopularDestinationService/index');
+const PopularDestinationService = require("./../../services/PopularDestinationService");
 
 const {
     SuccessResponse,
@@ -24,7 +24,7 @@ module.exports = (config) => {
     router.get(
         '/',
         asyncHandler(async (req, res) => {
-            const popularDestination = await PopularDestinationService.getAllPopularDestinations()
+            const popularDestination = await PopularDestinationService.getAllPopularDestinationById(req.params.id, req.user.id)
             return new SuccessResponse('Popular Destination data retrieved successful', popularDestination).send(res);
         })
     );
@@ -32,7 +32,7 @@ module.exports = (config) => {
     router.get(
         '/:id',
         asyncHandler(async (req, res) => {
-            const popularDestination = await PopularDestinationService.getAllPopularDestinationsById(req.params.id)
+            const popularDestination = await PopularDestinationService.getAllPopularDestinations(req.user.id)
             return new SuccessResponse('Popular Destination data retrieved successful', popularDestination).send(res);
         })
     );
