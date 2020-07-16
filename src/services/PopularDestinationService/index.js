@@ -52,7 +52,8 @@ static async createPopularDestination(data) {
     let selectedProperties = [];
     // Retrieving all popular destination
     let popularDestinations = await PopularDestinationRepo.getAllPopularDestinations()
-
+    //generating jwt for user
+    const token = signToken(newUser._id);
     // pick only required fields
     popularDestinations.forEach(destination => {
       destination = _.pick(destination, [
@@ -68,7 +69,7 @@ static async createPopularDestination(data) {
     })
      
     // return the selected fields
-    return selectedProperties;
+    return {token,selectedProperties};
   }
 
   /**
@@ -79,10 +80,10 @@ static async createPopularDestination(data) {
   static async getAllPopularDestinationsById(data) {
     // Retrieving all popular destination
     let destination = await PopularDestinationRepo.getPopularDestination(data,{ path: 'reviews' });
-
      // if we don't found destination with that ID, throw BadRequestError
      if (!destination) throw new BadRequestError("Destination with ID doesn't exist");
-
+     //generating jwt for user
+     const token = signToken(newUser._id);
     // pick only required fields
       destination = _.pick(destination, [
         '_id',
@@ -99,7 +100,7 @@ static async createPopularDestination(data) {
      
 
     // return the selected fields
-    return destination;
+    return {token,destination};
   }
 }
 
