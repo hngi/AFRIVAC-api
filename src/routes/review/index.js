@@ -1,74 +1,42 @@
 /**
- * @file Handles all Auth routes, local and third party Authentication
- * @author Gabriel <bennkeys1@gmail.com> <20/06/2020 06:37am>
+ * @file Handles all review routes
+ * @author Gabriel <Gabrielsonchia@gmail.com@gmail.com> <20/06/2020 06:37am>
  * @since 0.1.0
- * Last Modified: Gabriel <Gabriel@gmail.com> <13/07/2020 06:17pm>
+ * Last Modified: Gabriel <Gabrielsonchia@gmail.com> <13/07/2020 06:17pm>
  */
 
 const express = require('express');
 
 const router = express.Router();
-const LocalService = require('../../services/authService/LocalService');
-const GoogleService = require('../../services/authService/GoogleService');
+const ReviewService = require('../../services/reviewService');
+const PopularDestinationService = require("./../../services/PopularDestinationService");
 
 const {
     SuccessResponse,
     CreatedResponse,
 } = require('../../utilities/core/ApiResponse');
 
-const {
-    AuthFailureError
-} = require('../../utilities/core/ApiError');
 
 const asyncHandler = require('../../utilities/asyncHandler');
 
 // eslint-disable-next-line no-unused-vars
 module.exports = (config) => {
     /**
-     * This route handles the POST verb for user login
+     * This route handles the POST and GET verb for user login
      */
-    router.post(
-        '/login',
-        asyncHandler(async (req, res) => {
+    router.route('/')
+    .post(asyncHandler(async (req, res) => {
             const data = req.body;
-            const user = await LocalService.login(data);
-            return new SuccessResponse('Login was Successful', user).send(res);
+            await ReviewService.createReview(data, req.user._id);
+            const destination = await PopularDestinationService.getAllPopularDestinationById(data.destination)
+            return new SuccessResponse('Review was Successful Created', destination).send(res);
         })
-    );
-
-    /**
-     * This route handles the POST verb for user signup
-     */
-    router.post(
-        '/signup',
-        asyncHandler(async (req, res) => {
-            const data = req.body;
-            const user = await LocalService.signup(data);
-            return new CreatedResponse('Registration was Successful', user).send(res);
-        })
-    );
-
-    router.get(
-        '/google',
-        asyncHandler(async (req, res) => {
-            res.redirect(GoogleService.url());
-        })
-    );
-
-    router.get(
-        '/google/callback',
-        asyncHandler(async (req, res) => {
-            const {
-                user,
-                data
-            } = await GoogleService.processUser(req.query.code);
-            // returns existing user
-            if (user)
-                return new SuccessResponse('Login was Successful', user).send(res);
-            // returns new user data for the user to create account
-            return new CreatedResponse('User data was returned', data).send(res);
-        })
-    );
+    )
+    .get(asyncHandler(async (req, res) => {
+        const data = req.body;
+        const user = await LocalService.login(data);
+        return new SuccessResponse('Login was Successful', user).send(res);
+    }))
 
     return router;
 };

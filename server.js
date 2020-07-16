@@ -7,10 +7,18 @@
  */
 
 const http = require('http');
+<<<<<<< HEAD
+const dotenv = require('dotenv');
+// load env configuration as early as possible
+dotenv.config();
+=======
+>>>>>>> c392b84011c8407ef940013755cc141c59777fe4
 const config = require('./src/config');
 const app = require('./app')(config);
 // eslint-disable-next-line import/order
 const debug = require('debug')(`${config.applicationName}:server`);
+
+<<<<<<< HEAD
 
 /**
  * Get port from environment and store in Express.
@@ -35,6 +43,31 @@ server.on('listening', onListening);
  * Normalize a port into a number, string, or false.
  */
 
+=======
+/**
+ * Get port from environment and store in Express.
+ */
+const port = normalizePort(process.env.PORT || config.port);
+app.set('port', port);
+
+/**
+ * Create HTTP server.
+ */
+const server = http.createServer(app);
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+server.listen(port);
+server.on('error', onError);
+server.on('listening', onListening);
+
+/**
+ * Normalize a port into a number, string, or false.
+ */
+
+>>>>>>> c392b84011c8407ef940013755cc141c59777fe4
 function normalizePort(val) {
   const parsedPort = parseInt(val, 10);
 

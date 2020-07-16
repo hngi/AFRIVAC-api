@@ -5,6 +5,4 @@ constants.Roles = {
      USER: "user"
 }
 
-
-
 module.exports = constants

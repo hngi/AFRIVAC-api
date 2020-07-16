@@ -1,3 +1,10 @@
+/**
+ * @file Manages all database queries related to the Popular Destination document(table)
+ * @author Gabriel <gabrielsonchia@gmail.com> <20/06/2020 06:37am>
+ * @since 0.1.0
+ * Last Modified: Gabriel <Gabrielsonchia@gmail.com> <13/07/2020 06:17pm>
+ */
+
 const mongoose = require('mongoose');
 
 const destinationSchema = new mongoose.Schema({
@@ -55,6 +62,9 @@ const destinationSchema = new mongoose.Schema({
   }
 });
 
+/**
+ * indexing
+ */
 destinationSchema.index({
   ratingsAverage: -1
 });

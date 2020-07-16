@@ -9,7 +9,7 @@
 const _ = require('lodash');
 const UserRepo = require('../../data/repository/UserRepo');
 const   ReviewRepo = require('../../data/repository/ReviewRepo');
-const { signToken } = require('./../../utilities/jwt');
+const signToken = require('./../../utilities/jwt');
 const {
   AuthFailureError,
   BadRequestError,
@@ -41,7 +41,7 @@ class LocalService {
     if (!correctPassword) throw new AuthFailureError('Invalid Credentials');
 
     // extract only required fields
-    user = _.pick(user, ['_id', 'firstName', 'lastName', 'email', 'createdAt']);
+    user = _.pick(user, ['_id', 'name', 'email', 'photo', 'createdAt']);
     // return the found user object
     return{token, user}
   }
@@ -59,7 +59,6 @@ class LocalService {
     // create the new user in the database
     let newUser = await UserRepo.create(data);
      //generating jwt for user
-     console.log("On my way")
      const token = signToken(newUser._id);
     // pick only required fields
     newUser = _.pick(newUser, [
@@ -67,38 +66,13 @@ class LocalService {
       'name',
       'email',
       'createdAt',
+      'photo'
     ]);
-    console.log("Done")
+  
     // return the user object
     return {token, newUser};
   }
 
-  /**
-   * @description A static method to create reviews
-   * @param data An object that contains review and rating
-   * @return {Promise<UserModel>}
-   */
-static async craeteReview(data) {
-    // checks if user with specified email already exist
-    const review = await ReviewRepo.craeteReview(data);
-    // if we found user with that email, throw BadRequestError since the emails must be unique
-    if (user) throw new BadRequestError('User with email already exist');
-    // create the new user in the database
-    let newUser = await UserRepo.create(data);
-     //generating jwt for user
-     console.log("On my way")
-     const token = signToken(newUser._id);
-    // pick only required fields
-    newUser = _.pick(newUser, [
-      '_id',
-      'name',
-      'email',
-      'createdAt',
-    ]);
-    console.log("Done")
-    // return the user object
-    return {token, newUser};
-  }
 }
 
 // exports class as a module

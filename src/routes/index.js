@@ -8,7 +8,12 @@
 
 const express = require('express');
 const authRoute = require('./auth');
+const userRoute = require('./user');
+const adminRoute = require('./admin');
+const popularDestinationRouter = require('./popularDestination');
+const reviewRouter = require('./review');
 const Validator = require('../utilities/validator/schemaValidation');
+const protect = require('../utilities/protect');
 
 const router = express.Router();
 
@@ -18,8 +23,13 @@ module.exports = (config) => {
    *  please place unprotected routes first as there is a fall-through when the jwt protection is
    *  placed on any route
    */
+  
   router.use(Validator());
+  router.use('/admin', adminRoute(config));
   router.use('/auth', authRoute(config));
-
+  router.use(protect());
+  router.use('/user', userRoute(config));
+  router.use('/destinations', popularDestinationRouter(config));
+  router.use('/reviews', reviewRouter(config));
   return router;
 };
