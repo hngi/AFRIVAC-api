@@ -30,7 +30,7 @@ class LocalService {
     let user = await UserRepo.findUserByEmail(data.email);
 
     // if no user, it means the email is not registered, therefore throw BadRequestError
-    if (!user) throw new BadRequestError('User not registered');
+    if (!user) throw new  AuthFailureError('Invalid Credentials');
 
     if(!user.password) throw new BadRequestError('Wrong authentication method used. Try other available methods')
     // we found a user with the email, now check if the password is correct
