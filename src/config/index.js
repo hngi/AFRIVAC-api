@@ -18,7 +18,7 @@ const {
   PORT = 3000,
   MONGODB_PROD_URI,
   MONGODB_LOCAL_URI,
-  NODE_ENV = 'development',
+  NODE_ENV = 'production',
 } = process.env;
 
 // export configuration

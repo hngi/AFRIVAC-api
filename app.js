@@ -19,7 +19,7 @@ const {
 
 module.exports = (config) => {
   const app = express();
-
+console.log(config.mongodb);
   // initialize mongodb connection with mongoose
   mongoose
     .connect(config.mongodb.dsn, config.mongodb.options)
