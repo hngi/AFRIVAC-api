@@ -76,6 +76,8 @@ class UserService {
    * @return {Promise<UserModel>}
    */
   static async updateUser(id, data) {
+    //check if user tries updating user email
+    if(data.email) throw new BadRequestError("Email modification not allowed");
     // checks if user with specified ID exist
     let user = await UserRepo.updateOneById(id ,data);
     // if we don't found user with that ID, throw BadRequestError
