@@ -8,7 +8,7 @@
 const express = require('express');
 
 const router = express.Router();
-const LocalService = require('../../services/authService/LocalService');
+const LocalService = require('../../services/userService/index');
 
 const {
     SuccessResponse,
