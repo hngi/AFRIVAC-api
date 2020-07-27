@@ -3,7 +3,7 @@
  * the data repository which in turn queries the data, it handles accessing and modifying review data
  * @author Gabriel <gabrielsonchia@gmail.com> <20/06/2020 06:37am>
  * @since 0.1.0
- * Last Modified: Gabriel <Gabriel@gmail.com> <13/07/2020 06:17pm>
+ * Last Modified: Gabriel <gabrielsonchia@gmail.com> <13/07/2020 06:17pm>
  */
 
 const _ = require('lodash');

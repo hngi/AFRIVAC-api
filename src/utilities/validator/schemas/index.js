@@ -1,8 +1,8 @@
 /**
  * @file This file exports all validation schemas with their intended routes
-  * @author Gabriel <bennkeys1@gmail.com> <20/06/2020 06:37am>
+  * @author Gabriel <gabrielsonchia@gmail.com> <20/06/2020 06:37am>
  * @since 0.1.0
- * Last Modified: Gabriel <Gabriel@gmail.com> <13/07/2020 06:17pm>
+ * Last Modified: Gabriel <gabrielsonchia@gmail.com> <13/07/2020 06:17pm>
  */
 
 const Authentication = require('./Authentication');

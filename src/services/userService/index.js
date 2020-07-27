@@ -1,7 +1,7 @@
 /**
  * @file Using the separation of concern principle, this file handles the business logic that accesses
  * the data repository which in turn queries the data, it handles accessing and modifying user's data
- * @author Gabriel <gabrielsonchia@gmail.com@gmail.com> <20/06/2020 06:37am>
+ * @author Gabriel <gabrielsonchia@gmail.com> <20/06/2020 06:37am>
  * @since 0.1.0
  * Last Modified: Gabriel <gabrielsonchia@gmail.com> <13/07/2020 06:17pm>
  */

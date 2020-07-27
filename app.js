@@ -1,9 +1,9 @@
 /**
  * @file Defines the basic configuration of the Express Framework @see {@link https://expressjs.com/} and Mongoose
  * ORM @see {@link https://mongoosejs.com} connection to MONGODB database. Then it exports the config as module.
- * @author Gabriel <bennkeys1@gmail.com> <20/06/2020 06:37am>
+ * @author Gabriel <gabrielsonchia@gmail.com> <20/06/2020 06:37am>
  * @since 0.1.0
- * Last Modified: Gabriel <Gabriel@gmail.com> <13/07/2020 06:17pm>
+ * Last Modified: Gabriel <gabrielsonchia@gmail.com> <13/07/2020 06:17pm>
  */
 
 const express = require('express');

@@ -6,7 +6,6 @@
  */
 
 const PopularDestinations = require('../models/PopularDestinations');
-const ApiFeatures = require('./../../utilities/apiFeatures')
 
 /**
  * @class PopularDestinationsRepo

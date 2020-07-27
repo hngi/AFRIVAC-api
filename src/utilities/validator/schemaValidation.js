@@ -1,9 +1,9 @@
 /**
  * @file This file performs the actual validation, it serves as the middleware which intercepts every request
  * to our API endpoints and validate the request data before handling control over to the route handler
-  * @author Gabriel <bennkeys1@gmail.com> <20/06/2020 06:37am>
+  * @author Gabriel <gabrielsonchia@gmail.com> <20/06/2020 06:37am>
  * @since 0.1.0
- * Last Modified: Gabriel <Gabriel@gmail.com> <13/07/2020 06:17pm>
+ * Last Modified: Gabriel <gabrielsonchia@gmail.com> <13/07/2020 06:17pm>
  */
 
 const _ = require('lodash');

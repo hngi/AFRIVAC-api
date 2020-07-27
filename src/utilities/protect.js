@@ -1,3 +1,9 @@
+/**
+ * @file This file exports a fuction that is used to validate user token sent when a request is made to a protected end point.
+ * @author Gabriel <gabrielsonchia@gmail.com> <20/06/2020 06:37am>
+ * @since 0.1.0
+ * Last Modified: Gabriel <gabrielsonchia@gmail.com> <13/07/2020 06:17pm>
+ */
 const jwt = require('jsonwebtoken');
 const asyncHandler = require('./asyncHandler');
 const UserRepo = require('./../data/repository/UserRepo');
@@ -6,6 +12,10 @@ const {
 } = require('util');
 const { BadRequestError } = require('./core/ApiError')
 
+/**
+ * @description A function to verify the JSON web token sent by the client.
+ * @returns {Object}
+ */
 module.exports = () => {
 return asyncHandler(async (req, res, next) => {
     let token;
@@ -25,7 +35,6 @@ return asyncHandler(async (req, res, next) => {
     // 2) Verification token
     const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET)
     // 3) Check if user still exists
-    console.log(typeof decoded.id)
     const currentUser = await UserRepo.findUserById(decoded.id);
 
     if (!currentUser) {
