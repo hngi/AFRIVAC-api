@@ -30,7 +30,7 @@
     "nodemailer": "^6.4.10",
     "passport": "^0.4.1",
     "passport-google-plus-token": "^2.1.0",
-    "pug": "^3.0.0",
+    "pug": "^3.0.1",
     "shortid": "^2.2.15",
     "validator": "^13.1.1"
   },
